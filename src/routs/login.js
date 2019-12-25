@@ -2,7 +2,7 @@ import { usersModel } from "../models/users.model";
 import express from 'express';
 import { hash, compare } from 'bcryptjs';
 const login = express.Router();
-import { createAccessToken, createRefreshToken } from '../tokens';
+import { createAccessToken, createRefreshToken, sendAccessToken, sendRefreshToken } from '../tokens';
 
 login.get('/', async (req,res) =>{
     const { login, password } = req.body;
@@ -29,6 +29,7 @@ login.post("/", async (req, res) => {
     return res.status(400).send("Request body is missing");
   }
 let hashedPassword = await hash(req.body.password, 10)
+
   let model = new usersModel({
       name:req.body.name,
       fullName: req.body.fullName,
