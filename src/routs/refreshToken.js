@@ -1,5 +1,5 @@
 import { verify } from "jsonwebtoken";
-import { sessionModel, usersModel } from "../models";
+import { sessionModel } from "../models";
 import express from "express";
 import {
   createAccessToken,
@@ -7,30 +7,29 @@ import {
   sendRefreshToken
 } from "../tokens";
 
-const auth = express.Router();
+const refresh = express.Router();
 
-auth.get("/", async (req, res) => {
-    const token = req.cookies.ssid;
-    if (!token) return res.status(400).send({ message:"User is not autorized" });
+refresh.post("/", async (req, res) => {
+    const token = req.cookies.refreshToken;
+    if (!token) return res.send({ accessToken: "" });
     let payload = null;
     payload = verify(token, process.env.REFRESH_TOKEN_SECRET);
     try {
-    const session = await sessionModel.findOne({ user_id: payload.userId});
+    const session = (await sessionModel.find({ user_id: payload.userId }))[0];
     if (!session) return res.send({ error: "Session not found" });
     if (session.token !== token)
       return res.send({ error: "Token is incorrect" });
     const accessToken = createAccessToken(session.user_id, payload.role);
     const refreshToken = createRefreshToken(session.user_id, payload.role);
-    await sessionModel.updateOne(
+    const updateSession = await sessionModel.updateOne(
       { user_id: session.user_id },
       { $set: { token: refreshToken } }
     );
     sendRefreshToken(res, refreshToken);
-    const user =await usersModel.findOne({_id:payload.userId},{password:0})
-    return res.send({ token:accessToken, user: user});
+    return res.send({ accessToken });
   } catch (err) {
     return res.send({ accessToken: "Something wrong" });
   }
 });
 
-export default auth;
+export default refresh;

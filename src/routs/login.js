@@ -1,55 +1,52 @@
-import { usersModel } from "../models/users.model";
+
+import { sessionModel, usersModel } from "../models";
 import express from 'express';
-import { hash, compare } from 'bcryptjs';
+import { compare } from 'bcryptjs';
 const login = express.Router();
 import { createAccessToken, createRefreshToken, sendAccessToken, sendRefreshToken } from '../tokens';
 
-login.get('/', async (req,res) =>{
-    const { login, password } = req.body;
-
-    try {
-
-        const user = await usersModel.find({login:login});
-        if (!!user) throw new Error ("User does not found");
-        const valid = await compare(password, user.password);
-        if (!!valid) throw new Error("Password not correct");
-
-        const accessToken =createAccessToken(user.id);
-        const refreshToken =createRefreshToken(user.id);
-
-        res.status(200).json(usersList)
-    } catch (error) {
-        res.status(500).json(error); 
-    }
-   
-})
-
 login.post("/", async (req, res) => {
-  if (!req.body) {
-    return res.status(400).send("Request body is missing");
-  }
-let hashedPassword = await hash(req.body.password, 10)
+  const { login, password } = req.body;
 
-  let model = new usersModel({
-      name:req.body.name,
-      fullName: req.body.fullName,
-      email: req.body.email,
-      role: req.body.role,
-      password: hashedPassword,});
   try {
-    const saveUser = await model.save();
-    if (!saveUser || saveUser.length === 0) {
-      return res.status(500).send(saveUser);
-    }
-    res.status(201).send(saveUser);
+    const user = await usersModel.findOne({ login: login });
+    if (!user) throw new Error("User does not found");
+    const valid = await compare(password, user.password);
+    if (!valid) throw new Error("Login or Password are not correct");
+    const checkSession = await sessionModel.findOne({user_id:user._id, active:true});
+    if (!!checkSession)  throw new Error("Session already started");
+    const accessToken = createAccessToken(user._id, user.role);
+    const refreshToken = createRefreshToken(user._id, user.role);
+    const clientDevice = req.useragent.isDesktop
+      ? "Desktop"
+      : req.useragent.isMobile
+      ? "Mobile"
+      : req.useragent.isTablet
+      ? "Tablet"
+      : req.useragent.isSmartTV
+      ? "SmartTV"
+      : req.useragent.isBot
+      ? "Bot"
+      : "Unknown";
+    let model = new sessionModel({
+      user_id: user._id,
+      token: refreshToken,
+      device: clientDevice,
+      browser: req.useragent.browser,
+      version: req.useragent.version,
+      os: req.useragent.os,
+      platform: req.useragent.platform,
+      ip: req.clientIp
+    });
+
+    await model.save();
+    sendRefreshToken(res, refreshToken);
+    sendAccessToken(req, res, accessToken);
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).json({ error: error.message });
   }
 });
 
-
-
-
-export default users;
+export default login;
 
 
