@@ -2,7 +2,7 @@ import { sign } from "jsonwebtoken";
 
 export const createAccessToken = (userId,role) => {
   return sign({ userId, role }, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "15m"
+    expiresIn: "45m"
   });
 };
 
@@ -22,6 +22,6 @@ export const sendAccessToken = (req, res, accessToken) => {
 export const sendRefreshToken = (res, refreshToken) => {
   res.cookie("ssid", refreshToken, {
     httpOnly: true,
-    path: "/api/auth"
+    path: "/api/refresh"
   });
 };

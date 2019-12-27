@@ -2,8 +2,15 @@ import mongoose from 'mongoose'
 mongoose.set('useCreateIndex', true)
 
 let usersSchema = new mongoose.Schema({
-  login: String,
-  fullName: String,
+  login:{
+    type: String,
+    required: true,
+    unique: true
+  },
+  fullName: {
+    type: String,
+    required: true
+  },
   email: {
     type: String,
     required: true,
@@ -11,7 +18,8 @@ let usersSchema = new mongoose.Schema({
   },
   role: {
     type: Number,
-    required: true
+    required: true,
+    default:0
   },
 
   password: {

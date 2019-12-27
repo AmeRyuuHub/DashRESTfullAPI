@@ -10,7 +10,7 @@ login.post("/", async (req, res) => {
 
   try {
     const user = await usersModel.findOne({ login: login });
-    if (!user) throw new Error("User does not found");
+    if (!user) throw new Error("User not found");
     const valid = await compare(password, user.password);
     if (!valid) throw new Error("Login or Password are not correct");
     const checkSession = await sessionModel.findOne({user_id:user._id, active:true});

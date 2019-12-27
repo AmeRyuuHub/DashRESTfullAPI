@@ -5,9 +5,9 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import useragent from 'express-useragent';
-import {login, logout, users, status, auth} from './routs';
+import {login, logout, users, status, refresh} from './routs';
 import requestIp from 'request-ip';
-import { isAuthWithRole } from './protection/isAuthWithRole';
+import { withAuthAndRole, withAuth , withCookieAuth } from './protection';
 
 
 let server = express();
@@ -27,12 +27,11 @@ server.use((req, res, next) => {
   console.log(`${new Date().toString()} => ${req.originalUrl}`, req.body);
   next();
 });
-server.use("/api/users",isAuthWithRole(process.env.ADMIN_MARKER), users);
+server.use("/api/users",withAuthAndRole(process.env.ADMIN_MARKER), users);
 server.use("/api/login",login);
-server.use("/api/logout",logout);
-server.use("/api/status",status);
-// server.use("/api/refresh_token",refresh);
-server.use("/api/auth",auth);
+server.use("/api/logout",withAuth, logout);
+server.use("/api/status",withAuth, status);
+server.use("/api/refresh",withCookieAuth, refresh);
 server.use(express.static("public"));
 
 server.use((req, res, next) => {
