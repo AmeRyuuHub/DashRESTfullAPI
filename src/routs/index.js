@@ -3,4 +3,3 @@ export { default as logout } from "./logout.js";
 export { default as users } from "./users.js";
 export { default as status } from "./status.js";
 export { default as refresh } from "./refresh.js";
-export { default as auth } from "./auth.js";

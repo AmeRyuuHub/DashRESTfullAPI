@@ -1,13 +1,10 @@
 import { usersModel } from "../models";
-import express from 'express';
-import { hash } from 'bcryptjs';
-
-
+import express from "express";
+import { hash } from "bcryptjs";
 
 const users = express.Router();
 
 users.get("/", async (req, res) => {
-
   try {
     const usersList = await usersModel.find();
     res.status(200).send(usersList);
@@ -18,20 +15,18 @@ users.get("/", async (req, res) => {
   }
 });
 
-users.get('/:id',  async (req,res) =>{
+users.get("/:id", async (req, res) => {
   try {
     const userId = req.params.id;
-      const user = await usersModel.findOne({_id:userId},{password:0});
-      if (!user) throw new Error("User not found")
-      res.status(200).send({user:user})
-    } 
-   catch (err) {
+    const user = await usersModel.findOne({ _id: userId }, { password: 0 });
+    if (!user) return res.status(400).send({ message: "User not found" });
+    res.status(200).send({ user: user });
+  } catch (err) {
     res.status(500).send({
-      error: `${err.message}`,
+      error: `${err.message}`
     });
-  }   
-   
-})
+  }
+});
 
 users.post("/", async (req, res) => {
   if (!req.body) {
@@ -42,7 +37,7 @@ users.post("/", async (req, res) => {
     if (!!checkUser) {
       throw new Error("This login already exist");
     }
-   
+
     const checkEmail = await usersModel.findOne({ email: req.body.email });
     if (!!checkEmail) {
       throw new Error("This email already exist");
@@ -60,29 +55,27 @@ users.post("/", async (req, res) => {
     if (!saveUser || saveUser.length === 0) {
       return res.status(500).send(saveUser);
     }
-    res.status(201).send({message:"User was added"});
+    res.status(201).send({ message: "User was added" });
   } catch (error) {
     res.status(500).json(error.message);
   }
 });
 
-users.patch("/:id", async(req, res) => {
+users.patch("/:id", async (req, res) => {
   let userId = req.params.id;
   try {
-    
-      const updatedUser = await usersModel.updateOne(
-        { _id: userId },
-        { $set: {...req.body} }
-      );
-      updatedUser.nModified
-        ? res.status(201).send({message: `User ${userId} was updated` })
-        : res.status(204).send({message: "Nothing changed" }); 
-    } 
-   catch (err) {
+    const updatedUser = await usersModel.updateOne(
+      { _id: userId },
+      { $set: { ...req.body } }
+    );
+    updatedUser.nModified
+      ? res.status(201).send({ message: `User ${userId} was updated` })
+      : res.status(204).send({ message: "Nothing changed" });
+  } catch (err) {
     res.status(500).send({
-      error: `${err.message}`,
+      error: `${err.message}`
     });
-  } 
+  }
 });
 
 users.patch("/password/:id", async (req, res) => {
@@ -103,22 +96,16 @@ users.patch("/password/:id", async (req, res) => {
   }
 });
 
-users.delete("/:id", async(req, res) => {
-  
+users.delete("/:id", async (req, res) => {
   try {
     const userId = req.params.id;
-      await usersModel.deleteOne(
-        { _id: userId } 
-      );
-      res.status(201).send({message:`User ${userId} was removed`})
-    } 
-   catch (err) {
+    await usersModel.deleteOne({ _id: userId });
+    res.status(201).send({ message: `User ${userId} was removed` });
+  } catch (err) {
     res.status(500).send({
-      error: `${err.message}`,
+      error: `${err.message}`
     });
-  } 
+  }
 });
 
 export default users;
-
-

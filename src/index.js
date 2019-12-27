@@ -7,8 +7,7 @@ import cors from 'cors';
 import useragent from 'express-useragent';
 import {login, logout, users, status, refresh} from './routs';
 import requestIp from 'request-ip';
-import { withAuthAndRole, withAuth , withCookieAuth } from './protection';
-
+import { withAuthAndRole, withAuth , withCookieAuth } from './middlewares';
 
 let server = express();
 

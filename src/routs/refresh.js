@@ -2,7 +2,6 @@
 import express from "express";
 import { usersModel } from "../models";
 
-
 const refresh = express.Router();
 
 refresh.get("/auth", async (req, res) => {
@@ -21,7 +20,7 @@ refresh.get("/auth", async (req, res) => {
 
 refresh.get("/token", (req, res) => {
   const accessToken = req.accessToken;
-    return res.status(200).send({ accessToken });
+  return res.status(200).send({ accessToken });
 });
 
 export default refresh;
