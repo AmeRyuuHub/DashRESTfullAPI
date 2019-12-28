@@ -50,7 +50,6 @@ users.post("/", async (req, res) => {
       role: req.body.role,
       password: hashedPassword
     });
-
     const saveUser = await model.save();
     if (!saveUser || saveUser.length === 0) {
       return res.status(500).send(saveUser);
