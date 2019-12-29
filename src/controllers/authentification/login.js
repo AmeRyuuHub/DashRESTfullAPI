@@ -10,10 +10,6 @@ const loginController = async (req, res) => {
     if (!user) throw new Error("User not found");
     const valid = await compare(password, user.password);
     if (!valid) throw new Error("Login or Password are not correct");
-    const checkSession = await sessionModel.findOne({user_id:user._id, active:true});
-    if (!!checkSession)  throw new Error("Session already started");
-    const accessToken = createAccessToken(user._id, user.role);
-    const refreshToken = createRefreshToken(user._id, user.role);
     const clientDevice = req.useragent.isDesktop
       ? "Desktop"
       : req.useragent.isMobile
@@ -25,6 +21,21 @@ const loginController = async (req, res) => {
       : req.useragent.isBot
       ? "Bot"
       : "Unknown";
+    const checkSession = await sessionModel.findOne({user_id:user._id, active:true, device: clientDevice,
+      browser: req.useragent.browser,
+      version: req.useragent.version,
+      os: req.useragent.os,
+      platform: req.useragent.platform,
+      ip: req.clientIp});
+     
+    if (!!checkSession) { 
+      const checkTime = new Date().getTime() - checkSession.createDate.getTime() > 3600000;
+      if (!checkTime) throw new Error("Session already started")
+      await sessionModel.updateOne({_id:checkSession._id},{$set: { active: false, closeDate: new Date(), token: null }});}
+
+    const accessToken = createAccessToken(user._id, user.role);
+    const refreshToken = createRefreshToken(user._id, user.role);
+    
     let model = new sessionModel({
       user_id: user._id,
       token: refreshToken,
