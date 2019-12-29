@@ -1,12 +1,358 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="/css/style.css">
+    <title>API</title>
 </head>
+
 <body>
-    Welcome to express
+    <header>
+        <div class="navbar navbar-dark bg-dark shadow-sm">
+            <div class="container d-flex justify-content-between">
+                <a href="#" class="navbar-brand d-flex align-items-center">
+                    <img src="/img/logo.svg" alt="logo" style="margin-right:5px">
+                    <strong>DashboardApp API </strong>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main role="main ">
+        <section class="jumbotron text-center bg-dark  text-light mb-0 rounded-0">
+            <div class="container">
+                <div class="row">
+                    <div class = "col-sm-12 col-md-4 text-center">
+                        <img src="/img/section-top.svg" alt="API by Node JS">
+                    </div>
+                    <div class = "col-sm-12 col-md-8 ">
+                <h1 class="jumbotron-heading">RESTfull API (version 1.0.0)</h1>
+                <p class="lead ">It is API for my project Dashboard App. This App have all CRUD functionality. </p>
+                <h5 class="jumbotron-heading">URL : http://domain:4000/api/v1/ </h5>
+                <p class="lead text-muted mt-5"> You may see API's all source code at my GitHub page <span><img src="/img/github.svg" alt="GitHub" style="vertical-align:sub;"></span></p>
+
+               
+            </div>
+        </div>
+            </div>
+        </section>
+        <section class="py-5 text-center">
+            <div class="container">
+                <h2 class="mb-4"> DEVELOPED BY:</h2>
+                <div class="row my-5">
+                    <div class="col-sm-4  text-center">
+                        <img src="/img/node.svg" alt="Node JS" width="75%">
+                    </div>
+                    <div class="col-sm-4  text-center">
+                        <img src="/img/express.svg" alt="Mongo" width="75%">
+                    </div>
+                    <div class="col-sm-4  text-center">
+                        <img src="/img/mongo.svg" alt="Mongo" width="75%">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="py-5 bg-light">
+            <div class="container">
+                <div class="row">
+                   
+                    <div class="col-sm-12 col-md-7 pl-3 mb-3">
+                        <h2 class="mb-4"> JSON WEB TOKEN</h2>
+                        <h6> API's routs was protected by JWT.</h6>
+                            <p> After login you will get a token in response. To get a response from other routs you must add token to the header of your HTTP Request and refresh it every 30 minutes:</p>
+                            <br>
+                            <p class="h6"><kbd>"Authorization" : "Bearer <code> &lt token &gt</code>"</kbd></p>
+                    </div>
+                    <div class="col-sm-12 col-md-5 text-center ">
+                        <img src="/img/jwt.svg" alt="jwt" width="50%" >
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="py-5">
+            <div class="container">
+                <h2 class="mb-3">API Routs:</h2>
+                <div class="card">
+                    <div class="card-header">
+                        .../api/v1
+                    </div>
+                   
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a data-toggle="collapse" href="#login" role="button" aria-expanded="false"
+                                    aria-controls="login">/login </a>
+                                <span class="badge badge-primary badge-pill">POST</span>
+                            </li>
+                            <div class="collapse multi-collapse" id="login">
+                                <div class="card card-body">
+                                    <ul class="list-group">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div><span class="badge badge-primary badge-pill">POST</span><span
+                                                    class="text-muted pl-3">/login</span>/<span class="mx-3">Autorize on
+                                                    the service </span></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a data-toggle="collapse" href="#logout" role="button" aria-expanded="false"
+                                    aria-controls="logout">/logout</a>
+                                <span class="badge badge-primary badge-pill">POST</span>
+                            </li>
+                            <div class="collapse multi-collapse" id="logout">
+                                <div class="card card-body">
+                                    <ul class="list-group">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div><span class="badge badge-primary badge-pill">POST</span><span
+                                                    class="text-muted pl-3">/login</span>/<span class="mx-3">Logout from
+                                                    the service</span> </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a data-toggle="collapse" href="#refresh" role="button" aria-expanded="false"
+                                    aria-controls="refresh">/refresh</a>
+                                <span class="badge badge-success badge-pill">GET</span>
+                            </li>
+                            <div class="collapse multi-collapse" id="refresh">
+                                <div class="card card-body">
+                                    <ul class="list-group">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div> <span class="badge badge-success badge-pill">GET</span> <span
+                                                    class="text-muted pl-3">/refresh</span>/auth <span
+                                                    class="mx-3">Authorization check and refresh token after reset App
+                                                    page</span></div>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div> <span class="badge badge-success badge-pill">GET</span> <span
+                                                    class="text-muted pl-3">/refresh</span>/token <span
+                                                    class="mx-3">Refresh token after reset App page</span></div>
+                                        </li>
+
+                                </div>
+                            </div>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a data-toggle="collapse" href="#dashboard" role="button" aria-expanded="false"
+                                    aria-controls="dashboard">/dashboard</a>
+                                <span class="badge badge-success badge-pill">GET</span>
+                            </li>
+                            <div class="collapse multi-collapse" id="dashboard">
+                                <div class="card card-body">
+                                    <ul class="list-group">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div> <span class="badge badge-success badge-pill">GET</span> <span
+                                                    class="text-muted pl-3">/dashboard</span>/{<i>MAC</i>} <span
+                                                    class="mx-3"> Get common device information by MAC Address</span>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div> <span class="badge badge-success badge-pill">GET</span> <span
+                                                    class="text-muted pl-3">/dashboard</span>/{<i>MAC</i>}/ping<span
+                                                    class="mx-3">Get information about ping by MAC Address</span></div>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div> <span class="badge badge-success badge-pill">GET</span> <span
+                                                    class="text-muted pl-3">/dashboard</span>/{<i>MAC</i>}/dvbc <span
+                                                    class="mx-3">Get information about DVB-C signal by MAC
+                                                    Address</span></div>
+                                        </li>
+                                </div>
+                            </div>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a data-toggle="collapse" href="#profile" role="button" aria-expanded="false"
+                                    aria-controls="profile">/profile</a>
+                                <div>
+                                    <span class="badge badge-success badge-pill ">GET</span><span
+                                        class="badge badge-warning badge-pill ml-1">PATCH</span><span
+                                        class="badge badge-danger badge-pill ml-1">DELETE</span>
+                                </div>
+                            </li>
+                            <div class="collapse multi-collapse" id="profile">
+                                <div class="card card-body">
+                                    <ul class="list-group">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div> <span class="badge badge-success badge-pill">GET</span> <span
+                                                    class="text-muted pl-3">/profile</span>/<span class="mx-3"> Get
+                                                    profile info</span></div>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div> <span class="badge badge-warning badge-pill">PATCH</span> <span
+                                                    class="text-muted pl-3">/profile</span>/<span class="mx-3"> Change
+                                                    profile info without password</span></div>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div> <span class="badge badge-warning badge-pill">PATCH</span> <span
+                                                    class="text-muted pl-3">/profile</span>/password<span
+                                                    class="mx-3">Change profile password</span></div>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div> <span class="badge badge-danger badge-pill">DELETE</span> <span
+                                                    class="text-muted pl-3">/profile</span>/ <span class="mx-3">Delete
+                                                    profile page from the service</span></div>
+                                        </li>
+                                </div>
+                            </div>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a data-toggle="collapse" href="#users" role="button" aria-expanded="false"
+                                    aria-controls="users">/users</a>
+                                <div>
+                                    <span class="badge badge-success badge-pill ">GET</span><span
+                                        class="badge badge-primary badge-pill ml-1">POST</span><span
+                                        class="badge badge-warning badge-pill ml-1">PATCH</span><span
+                                        class="badge badge-danger badge-pill ml-1">DELETE</span>
+                                </div>
+                            </li>
+                            <div class="collapse multi-collapse" id="users">
+                                <div class="card card-body">
+                                    <ul class="list-group">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div> <span class="badge badge-success badge-pill">GET</span> <span
+                                                    class="text-muted pl-3">/users</span>/<span class="mx-3"> Get all
+                                                    users</span></div>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div> <span class="badge badge-success badge-pill">GET</span> <span
+                                                    class="text-muted pl-3">/users</span>/{<i>userId</i>}<span
+                                                    class="mx-3"> Get profile by userId</span></div>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div> <span class="badge badge-primary badge-pill">POST</span> <span
+                                                    class="text-muted pl-3">/users</span>/<span class="mx-3"> Add new
+                                                    user</span></div>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div> <span class="badge badge-warning badge-pill">PATCH</span> <span
+                                                    class="text-muted pl-3">/users</span>/{<i>userId</i>}<span
+                                                    class="mx-3"> Change profile by userId without password</span></div>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div> <span class="badge badge-warning badge-pill">PATCH</span> <span
+                                                    class="text-muted pl-3">/users</span>/password/{<i>userId</i>}<span
+                                                    class="mx-3">Change user password</span></div>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div> <span class="badge badge-danger badge-pill">DELETE</span> <span
+                                                    class="text-muted pl-3">/users</span>/ <span class="mx-3">Delete
+                                                    user from the service</span></div>
+                                        </li>
+                                </div>
+                            </div>
+                        </ul>
+                    
+                </div>
+            </div>
+        </section>
+        <!-- <div class="py-5 bg-light">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"
+                                focusable="false" role="img" aria-label="Placeholder: Thumbnail">
+                                <title>Placeholder</title>
+                                <rect fill="#55595c" width="100%" height="100%" /><text fill="#eceeef" dy=".3em" x="50%"
+                                    y="50%">Thumbnail</text>
+                            </svg>
+                            <div class="card-body">
+                                <p class="card-text">This is a wider card with supporting text below as a natural
+                                    lead-in to additional content. This content is a little bit longer.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                    </div>
+                                    <small class="text-muted">9 mins</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"
+                                focusable="false" role="img" aria-label="Placeholder: Thumbnail">
+                                <title>Placeholder</title>
+                                <rect fill="#55595c" width="100%" height="100%" /><text fill="#eceeef" dy=".3em" x="50%"
+                                    y="50%">Thumbnail</text>
+                            </svg>
+                            <div class="card-body">
+                                <p class="card-text">This is a wider card with supporting text below as a natural
+                                    lead-in to additional content. This content is a little bit longer.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                    </div>
+                                    <small class="text-muted">9 mins</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"
+                                focusable="false" role="img" aria-label="Placeholder: Thumbnail">
+                                <title>Placeholder</title>
+                                <rect fill="#55595c" width="100%" height="100%" /><text fill="#eceeef" dy=".3em" x="50%"
+                                    y="50%">Thumbnail</text>
+                            </svg>
+                            <div class="card-body">
+                                <p class="card-text">This is a wider card with supporting text below as a natural
+                                    lead-in to additional content. This content is a little bit longer.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                    </div>
+                                    <small class="text-muted">9 mins</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div> -->
+
+    </main>
+
+    <footer class="text-muted bg-light">
+        <div class="container py-3">
+            <p class="float-right">
+                <a href="#">Back to top</a>
+            </p>
+
+            <p>Visit my all progects on my GitHub page. :) </p>
+        </div>
+    </footer>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
 </body>
+
 </html>

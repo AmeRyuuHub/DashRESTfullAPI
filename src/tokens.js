@@ -22,6 +22,6 @@ export const sendAccessToken = (req, res, accessToken) => {
 export const sendRefreshToken = (res, refreshToken) => {
   res.cookie("ssid", refreshToken, {
     httpOnly: true,
-    path: "/api/refresh"
+    path: "/api/v1/refresh"
   });
 };

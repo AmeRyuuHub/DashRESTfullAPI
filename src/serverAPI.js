@@ -6,7 +6,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import useragent from 'express-useragent';
 import requestIp from 'request-ip';
-import app from './src/app';
+import app from './app';
 
 
 let server = express();
@@ -42,3 +42,4 @@ const PORT = process.env.PORT || 5000;
 
 server.listen(PORT, () => console.info(`Server has started on ${PORT}`)); 
 
+ 
