@@ -7,7 +7,8 @@ import cors from 'cors';
 import useragent from 'express-useragent';
 import requestIp from 'request-ip';
 import app from './app';
-
+import winston from 'winston';
+import expressWinston from 'express-winston';
 
 let server = express();
 
@@ -27,6 +28,28 @@ server.use((req, res, next) => {
   console.log(`${new Date().toString()} => ${req.originalUrl}`, req.body);
   next();
 });
+
+server.use(expressWinston.logger({
+  transports: [
+    new winston.transports.File({
+      filename: './logs/info.log',
+      level: 'info'
+    }),
+    new winston.transports.File({
+      filename: './logs/errors.log',
+      level: 'error'
+    })
+  ],
+  format: winston.format.combine(
+    winston.format.colorize(),
+    winston.format.json()
+  ),
+  
+ 
+}));
+
+
+
 server.use("/api/v1", app);
 server.use(express.static("public"));
 
