@@ -1,0 +1,36 @@
+html {
+margin: 0px;
+padding: 0px;
+box-sizing: border-box;
+    font-size: 1rem;
+  }
+  
+  
+@media (min-width: 576px) {
+
+  html {
+    font-size: 0.8rem;
+  }
+
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  html {
+    font-size: 1rem;
+  }
+}
+
+/*  Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  html {
+    font-size: 1.1rem;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  html {
+    font-size: 1.2rem;
+  }
+}

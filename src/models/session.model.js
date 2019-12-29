@@ -6,15 +6,44 @@ let sessionSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
+  closeDate:{
+    type: Date,
+    default: null
+  },
   user_id: String,
   active: {
     type: Boolean,
     default: true
   },
-  userCookie: {
-    type: String,
-    default: null
-  }
+  token:{
+    type:String,
+    default:null
+  },
+  device:{
+    type:String,
+    default:null,
+  },
+  browser:{
+    type:String,
+    default:null,
+  },
+  version:{
+    type:String,
+    default:null,
+  },
+  os:{
+    type:String,
+    default:null,
+  },
+  platform:{
+    type:String,
+    default:null,
+  },
+  ip:{
+    type:String,
+    default:null,
+  },
 });
 
-export const sessionModel = mongoose.model('Sessions',sessionSchema)
+ const sessionModel = mongoose.model('Sessions',sessionSchema);
+ export default sessionModel;
