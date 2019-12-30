@@ -74,7 +74,7 @@ export const deleteProfile = async(req, res) => {
         { user_id: session.user_id },
         { $set: { active: false, closeDate: new Date(), token: null } }
       );
-      res.clearCookie("ssid", { path: "/auth" }); 
+      res.clearCookie("ssid", { path: "/api/v1/refresh" }); 
       res.status(201).send({message:`User ${userId} was removed`})
     } 
    catch (err) {

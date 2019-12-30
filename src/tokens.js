@@ -1,21 +1,21 @@
 import { sign } from "jsonwebtoken";
 
-export const createAccessToken = (userId,role) => {
-  return sign({ userId, role }, process.env.ACCESS_TOKEN_SECRET, {
+export const createAccessToken = (id,role) => {
+  return sign({ id, role }, process.env.ACCESS_TOKEN_SECRET, {
     expiresIn: "45m"
   });
 };
 
-export const createRefreshToken = (userId,role) => {
-  return sign({ userId, role}, process.env.REFRESH_TOKEN_SECRET, {
+export const createRefreshToken = (id,role) => {
+  return sign({ id, role}, process.env.REFRESH_TOKEN_SECRET, {
     expiresIn: "7d"
   });
 };
 
-export const sendAccessToken = (req, res, accessToken) => {
+export const sendAccessToken = (req, res, accessToken, fullName) => {
   res.status(201).send({
-    accessToken,
-    login: req.body.login
+    token:accessToken,
+    fullName: fullName,
   });
 };
 

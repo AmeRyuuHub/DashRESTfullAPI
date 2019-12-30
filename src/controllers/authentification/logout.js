@@ -4,20 +4,15 @@ import { sessionModel } from "../../models";
 
 const logoutController = async (req, res) => {
   try {
-    const token = req.cookies.refreshToken;
-
-    if (!token) return res.send({ accessToken: "" });
-    let payload = null;
-    payload = verify(token, process.env.REFRESH_TOKEN_SECRET);
-    const session = await sessionModel.findOne({ user_id: payload.userId });
-    if (!session) return res.send({ error: "Session not found" });
-    await sessionModel.updateOne(
-      { user_id: session.user_id },
+    const sessionId = req.sessionId
+    const session = await sessionModel.updateOne(
+      { _id: sessionId, active:true},
       { $set: { active: false, closeDate: new Date(), token: null } }
     );
-    res.clearCookie("ssid", { path: "/auth" });
+    if (!session.nModified) throw new Error("Session not found");
+    res.clearCookie("ssid", { path: "/api/v1/refresh" });
     return res.send({
-      message: "Logged out"
+      message: "Loggout success"
     });
   } catch (error) {
     return res.send({

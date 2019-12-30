@@ -33,12 +33,11 @@ const loginController = async (req, res) => {
       if (!checkTime) throw new Error("Session already started")
       await sessionModel.updateOne({_id:checkSession._id},{$set: { active: false, closeDate: new Date(), token: null }});}
 
-    const accessToken = createAccessToken(user._id, user.role);
-    const refreshToken = createRefreshToken(user._id, user.role);
+    
     
     let model = new sessionModel({
       user_id: user._id,
-      token: refreshToken,
+      token: null,
       device: clientDevice,
       browser: req.useragent.browser,
       version: req.useragent.version,
@@ -47,9 +46,13 @@ const loginController = async (req, res) => {
       ip: req.clientIp
     });
 
-    await model.save();
+    let sessionSaved = await model.save();
+    const accessToken = createAccessToken(sessionSaved._id, user.role);
+    const refreshToken = await createRefreshToken(sessionSaved._id, user.role);
+    await sessionModel.updateOne({_id:sessionSaved._id},{$set: { token:refreshToken}});
+
     sendRefreshToken(res, refreshToken);
-    sendAccessToken(req, res, accessToken);
+    sendAccessToken(req, res, accessToken, user.fullName);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
