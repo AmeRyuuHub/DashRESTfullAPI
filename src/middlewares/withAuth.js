@@ -14,6 +14,7 @@ const withAuth = async (req, res, next) => {
     req.sessionId = id;
     req.userId = session.user_id;
   } catch (error) {
+    if (error.name === "TokenExpiredError") {return res.status(498).send({ message: error.message});} 
     return res.status(401).send({ message: error.message });
   }
 
