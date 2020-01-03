@@ -2,7 +2,7 @@ import { sign } from "jsonwebtoken";
 
 export const createAccessToken = (id,role) => {
   return sign({ id, role }, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "45m"
+    expiresIn: "15m"
   });
 };
 

@@ -16,7 +16,7 @@ export const getDeviceInfo = (model, one) => {
       let checkValue = one === "one" ? statusList : statusList.length;
 
       if (!checkValue)
-        return res.status(400).send({ message: "MAC or Device ID not found" });
+        return res.status(404).send({ message: "MAC or Device ID not found" });
 
       res.status(200).send({ mac: mac, status: statusList });
     } catch (err) {
