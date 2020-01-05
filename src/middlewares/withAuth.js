@@ -1,19 +1,23 @@
 import { verify } from "jsonwebtoken";
+import { sessionModel } from "../models";
 
-const withAuth = (req, res, next) => {
+const withAuth = async (req, res, next) => {
   try {
-  const authorization = req.headers["authorization"];
-  if (!authorization) throw new Error("You need to login.");
+    const authorization = req.headers["authorization"];
+    if (!authorization) throw new Error("You need to login.");
 
-  const token = authorization.split(" ")[1];
-  
-    const { userId } = verify(token, process.env.ACCESS_TOKEN_SECRET);
-    if (!userId) throw new Error("You need to login.");
-    req.userId = userId;
+    const token = authorization.split(" ")[1];
+    const { id } = verify(token, process.env.ACCESS_TOKEN_SECRET);
+    if (!id) throw new Error("Token is incorrect.");
+    const session = await sessionModel.findOne({ _id: id, active: true });
+    if (!session) throw new Error("You need to login.");
+    req.sessionId = id;
+    req.userId = session.user_id;
   } catch (error) {
-     return res.status(401).send({message: error.message})
+    if (error.name === "TokenExpiredError") {return res.status(498).send({ message: error.message});} 
+    return res.status(401).send({ message: error.message });
   }
-  
+
   return next();
 };
 
